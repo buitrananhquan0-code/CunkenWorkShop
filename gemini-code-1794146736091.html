@@ -60,7 +60,7 @@
             font-size: 1rem;
         }
 
-        .nav-link:hover {
+        .nav-link:hover, .nav-link.active {
             color: #38bdf8;
         }
 
@@ -94,6 +94,89 @@
             background-color: #2ea043;
         }
 
+        /* --- KHU VỰC HIỂN THỊ TÀI KHOẢN --- */
+        .user-menu-container {
+            position: relative;
+        }
+
+        .user-avatar-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #21262d;
+            border: 1px solid #30363d;
+            padding: 5px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            color: #f8fafc;
+            font-weight: 500;
+            transition: border-color 0.2s;
+        }
+
+        .user-avatar-btn:hover {
+            border-color: #38bdf8;
+        }
+
+        .user-avatar-btn img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 50px;
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            width: 220px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            overflow: hidden;
+            z-index: 1100;
+        }
+
+        .dropdown-menu.active {
+            display: block;
+        }
+
+        .dropdown-header {
+            padding: 15px;
+            border-bottom: 1px solid #30363d;
+            font-size: 0.9rem;
+            color: #94a3b8;
+            word-break: break-all;
+        }
+
+        .dropdown-item {
+            display: block;
+            width: 100%;
+            padding: 12px 15px;
+            background: none;
+            border: none;
+            color: #f8fafc;
+            text-align: left;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+
+        .dropdown-item:hover {
+            background-color: #21262d;
+            color: #38bdf8;
+        }
+
+        .dropdown-item.logout {
+            color: #f85149;
+            border-top: 1px solid #30363d;
+        }
+
+        .dropdown-item.logout:hover {
+            background-color: rgba(248, 81, 73, 0.1);
+        }
+
         /* --- NỘI DUNG CHÍNH --- */
         main {
             flex: 1;
@@ -101,6 +184,14 @@
             max-width: 1100px;
             margin: 0 auto;
             width: 100%;
+        }
+
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active {
+            display: block;
         }
 
         header.hero {
@@ -178,7 +269,7 @@
             gap: 5px;
         }
 
-        /* --- MODAL ĐĂNG KÝ --- */
+        /* --- MODAL --- */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -289,125 +380,140 @@
     <!-- THANH MENU TRÊN CÙNG -->
     <nav>
         <div class="nav-left">
-            <a href="#" class="logo">⚡ CunkenWorkShop</a>
+            <a href="#home" class="logo" onclick="switchTab('home')">⚡ CunkenWorkShop</a>
             <a href="https://aftercode.pages.dev/editor.html" target="_blank" class="nav-link">Create</a>
-            <a href="#giao-luu" class="nav-link">Khu giao lưu</a>
+            <a href="#chat" class="nav-link" id="navChat" onclick="switchTab('chat')">Khu giao lưu</a>
         </div>
-        <div class="nav-right">
-            <button class="btn-auth btn-login">Đăng nhập</button>
-            <button class="btn-auth btn-register" onclick="openRegisterModal()">Đăng ký</button>
+        <div class="nav-right" id="authNavSection">
+            <button class="btn-auth btn-login" onclick="openModal('loginModal')">Đăng nhập</button>
+            <button class="btn-auth btn-register" onclick="openModal('registerModal')">Đăng ký</button>
         </div>
     </nav>
 
-    <!-- NỘI DUNG TRANG WEB -->
+    <!-- NỘI DUNG CHÍNH -->
     <main>
-        <header class="hero">
-            <h1>Cổng Dự Án & Công Cụ Sáng Tạo</h1>
-            <p>Nơi tập hợp các nền tảng lập trình, công cụ code và dự án đỉnh cao</p>
-        </header>
+        <!-- PHẦN HOME (/#home) -->
+        <section id="section-home" class="page-section">
+            <header class="hero">
+                <h1>Cổng Dự Án & Sáng Tạo</h1>
+                <p>Nơi tập hợp các công cụ lập trình đỉnh cao</p>
+            </header>
 
-        <h2 class="section-title">Danh Sách Dự Án & Công Cụ</h2>
-        <div class="container">
-            <!-- Scratch -->
-            <a href="https://scratch.mit.edu/" target="_blank" class="card">
-                <div>
-                    <h3>Scratch</h3>
-                    <p>Nền tảng lập trình kéo thả phổ biến nhất cho nhà sáng tạo trẻ.</p>
-                </div>
-                <span class="btn-text">Truy cập &rarr;</span>
-            </a>
-
-            <!-- PenguinMod -->
-            <a href="https://penguinmod.com/" target="_blank" class="card">
-                <div>
-                    <h3>PenguinMod</h3>
-                    <p>Bản mở rộng cực mạnh của Scratch với nhiều tính năng độc đáo.</p>
-                </div>
-                <span class="btn-text">Truy cập &rarr;</span>
-            </a>
-
-            <!-- TurboWarp -->
-            <a href="https://turbowarp.org/" target="_blank" class="card">
-                <div>
-                    <h3>TurboWarp</h3>
-                    <p>Trình biên dịch giúp dự án Scratch chạy nhanh gấp nhiều lần.</p>
-                </div>
-                <span class="btn-text">Truy cập &rarr;</span>
-            </a>
-
-            <!-- NitroBolt -->
-            <a href="https://nitrobolt.github.io/" target="_blank" class="card">
-                <div>
-                    <h3>NitroBolt</h3>
-                    <p>Công cụ tối ưu và hỗ trợ lập trình game nhanh chóng.</p>
-                </div>
-                <span class="btn-text">Truy cập &rarr;</span>
-            </a>
-
-            <!-- AfterCode Editor -->
-            <a href="https://aftercode.pages.dev/editor.html" target="_blank" class="card">
-                <div>
-                    <h3>AfterCode Editor</h3>
-                    <p>Trình soạn thảo mã nguồn trực tuyến tiện lợi.</p>
-                </div>
-                <span class="btn-text">Truy cập &rarr;</span>
-            </a>
-
-            <!-- TurboShare -->
-            <a href="https://editor.turboshare.org.uk/" target="_blank" class="card">
-                <div>
-                    <h3>TurboShare Editor</h3>
-                    <p>Nền tảng chia sẻ và chỉnh sửa dự án trực tuyến.</p>
-                </div>
-                <span class="btn-text">Truy cập &rarr;</span>
-            </a>
-        </div>
-
-        <div id="giao-luu" style="margin-top: 40px;">
-            <h2 class="section-title">Khu Giao Lưu</h2>
-            <div class="card" style="background-color: #161b22;">
-                <h3>Phòng chat / Trao đổi dự án</h3>
-                <p>Nơi anh em cộng đồng ghé thăm, chia sẻ ý tưởng game Scratch và thảo luận lập trình.</p>
-                <span class="btn-text" style="color: #8b949e;">Sắp ra mắt tính năng...</span>
+            <h2 class="section-title">Danh Sách Công Cụ & Dự Án</h2>
+            <div class="container">
+                <a href="https://turbowarp.org/" target="_blank" class="card">
+                    <div>
+                        <h3>TurboWarp</h3>
+                        <p>Trình biên dịch giúp dự án Scratch chạy nhanh gấp nhiều lần.</p>
+                    </div>
+                    <span class="btn-text">Truy cập &rarr;</span>
+                </a>
+                <a href="https://aftercode.pages.dev/editor.html" target="_blank" class="card">
+                    <div>
+                        <h3>AfterCode Editor</h3>
+                        <p>Trình soạn thảo mã nguồn trực tuyến tiện lợi cho nhà phát triển.</p>
+                    </div>
+                    <span class="btn-text">Truy cập &rarr;</span>
+                </a>
+                <a href="https://penguinmod.com/" target="_blank" class="card">
+                    <div>
+                        <h3>PenguinMod</h3>
+                        <p>Bản mở rộng cực mạnh mẽ với nhiều tính năng độc đáo.</p>
+                    </div>
+                    <span class="btn-text">Truy cập &rarr;</span>
+                </a>
             </div>
-        </div>
+        </section>
+
+        <!-- PHẦN KHU GIAO LƯU (/#chat) -->
+        <section id="section-chat" class="page-section">
+            <header class="hero">
+                <h1>Khu Giao Lưu Cộng Đồng</h1>
+                <p>Thảo luận, chia sẻ ý tưởng và kết nối với các lập trình viên khác</p>
+            </header>
+            <div class="card" style="background-color: #161b22; max-width: 700px; margin: 0 auto;">
+                <h3>Phòng Chat Trực Tuyến</h3>
+                <p>Nơi anh em chia sẻ các dự án game, mẹo code và trò chuyện cùng nhau.</p>
+                <div style="margin-top: 20px; padding: 15px; background: #0d1117; border-radius: 6px; color: #8b949e; min-height: 150px;">
+                    [Hệ thống chat đang phát triển... Anh em chuẩn bị hóng nhé!]
+                </div>
+            </div>
+        </section>
     </main>
 
-    <!-- HỘP THOẠI (MODAL) ĐĂNG KÝ -->
+    <!-- MODAL ĐĂNG KÝ -->
     <div class="modal-overlay" id="registerModal">
         <div class="modal">
-            <button class="close-modal" onclick="closeRegisterModal()">&times;</button>
+            <button class="close-modal" onclick="closeModal('registerModal')">&times;</button>
             <h2>Đăng Ký Tài Khoản</h2>
-            <form onsubmit="event.preventDefault(); alert('Đăng ký thành công (Giao diện mẫu)!');">
+            <form onsubmit="handleRegister(event)">
                 <div class="form-group">
-                    <label>Tên miền riêng (nếu có)</label>
-                    <input type="text" placeholder="vd: cunken.pages.dev">
+                    <label>Tên miền riêng</label>
+                    <input type="text" id="regDomain" placeholder="vd: cunken.pages.dev">
                 </div>
                 <div class="form-group">
                     <label>Tên hiển thị (@)</label>
-                    <input type="text" placeholder="vd: @cunken" required>
+                    <input type="text" id="regUsername" placeholder="vd: @cunken" required>
                 </div>
                 <div class="form-group">
                     <label>Gmail chính</label>
-                    <input type="email" placeholder="vd: email@gmail.com" required>
+                    <input type="email" id="regEmail" placeholder="vd: email@gmail.com" required>
                 </div>
                 <div class="form-group">
-                    <label>Gmail hỗ trợ (phòng khi gmail 1 lỗi - có thể bỏ trống)</label>
-                    <input type="email" placeholder="vd: duphong@gmail.com">
+                    <label>Gmail hỗ trợ (tùy chọn)</label>
+                    <input type="email" id="regBackupEmail" placeholder="vd: duphong@gmail.com">
                 </div>
                 <div class="form-group">
                     <label>Mật khẩu</label>
-                    <input type="password" placeholder="Nhập mật khẩu" required>
+                    <input type="password" id="regPassword" placeholder="Nhập mật khẩu" required>
                 </div>
                 <div class="form-group">
                     <label>Nhập lại mật khẩu</label>
-                    <input type="password" placeholder="Xác nhận lại mật khẩu" required>
+                    <input type="password" id="regConfirmPassword" placeholder="Xác nhận lại mật khẩu" required>
                 </div>
                 <div class="captcha-box">
                     <input type="checkbox" id="cloudflare-bot" required>
-                    <label for="cloudflare-bot" style="margin:0; cursor:pointer; color: #f8fafc;">Tôi không phải là người máy (Cloudflare Turnstile Check)</label>
+                    <label for="cloudflare-bot" style="margin:0; cursor:pointer; color: #f8fafc;">Xác thực chống Bot (Mô phỏng)</label>
                 </div>
                 <button type="submit" class="btn-submit">Tạo tài khoản</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL ĐĂNG NHẬP -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal">
+            <button class="close-modal" onclick="closeModal('loginModal')">&times;</button>
+            <h2>Đăng Nhập Tài Khoản</h2>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>Tên hiển thị (@) hoặc Gmail</label>
+                    <input type="text" id="loginUser" placeholder="vd: @cunken" required>
+                </div>
+                <div class="form-group">
+                    <label>Mật khẩu</label>
+                    <input type="password" id="loginPassword" placeholder="Nhập mật khẩu" required>
+                </div>
+                <button type="submit" class="btn-submit" style="margin-top: 10px;">Đăng Nhập</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL CÀI ĐẶT TÀI KHOẢN -->
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal">
+            <button class="close-modal" onclick="closeModal('settingsModal')">&times;</button>
+            <h2>Cài Đặt Tài Khoản</h2>
+            <form onsubmit="handleUpdateSettings(event)">
+                <div class="form-group">
+                    <label>Link Ảnh Đại Diện Mới (URL)</label>
+                    <input type="url" id="newAvatarUrl" required>
+                </div>
+                <div class="form-group">
+                    <label>Đổi Tên Hiển Thị (@)</label>
+                    <input type="text" id="newUsername" required>
+                </div>
+                <button type="submit" class="btn-submit">Lưu Thay Đổi</button>
             </form>
         </div>
     </div>
@@ -417,20 +523,3 @@
     </footer>
 
     <script>
-        function openRegisterModal() {
-            document.getElementById('registerModal').style.display = 'flex';
-        }
-        function closeRegisterModal() {
-            document.getElementById('registerModal').style.display = 'none';
-        }
-        // Đóng modal khi bấm ra ngoài vùng form
-        window.onclick = function(event) {
-            let modal = document.getElementById('registerModal');
-            if (event.target == modal) {
-                modal.style.display = 'none';
-            }
-        }
-    </script>
-
-</body>
-</html>
